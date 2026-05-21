@@ -4,7 +4,7 @@ import React, { useState } from 'react';
 import { useTranslation } from '../../locales/useTranslation';
 import { useClubStore } from '../../store/clubStore';
 import { motion } from 'framer-motion';
-import { Bell, CheckCheck, Trash2, CheckCircle2, AlertTriangle, ShieldAlert, Info } from 'lucide-react';
+import { Bell, CheckCheck, CheckCircle2, AlertTriangle, ShieldAlert, Info } from 'lucide-react';
 
 export default function NotificationsModule() {
   const { t, language } = useTranslation();

@@ -4,12 +4,11 @@ import React, { useState } from 'react';
 import { useTranslation } from '../../locales/useTranslation';
 import { useUIStore } from '../../store/uiStore';
 import { useClubStore } from '../../store/clubStore';
-import { motion } from 'framer-motion';
-import { Settings, ShieldCheck, RefreshCcw, Save, Trash2, Globe, Moon, Sun, Info } from 'lucide-react';
+import { Settings, RefreshCcw, Save, Globe, Moon, Sun, Info } from 'lucide-react';
 
 export default function SettingsModule() {
-  const { t, language, isRtl } = useTranslation();
-  const { theme, toggleTheme, setLanguage, setTheme } = useUIStore();
+  const { t, language } = useTranslation();
+  const { theme, setLanguage, setTheme } = useUIStore();
   const { addNotification } = useClubStore();
 
   const [clubName, setClubName] = useState('VolleyClub Pro Jeddah');

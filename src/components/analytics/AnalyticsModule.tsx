@@ -4,12 +4,12 @@ import React from 'react';
 import { useTranslation } from '../../locales/useTranslation';
 import { useClubStore } from '../../store/clubStore';
 import { motion } from 'framer-motion';
-import { FileText, Download, TrendingUp, BarChart2, Award, Calendar, ChevronRight } from 'lucide-react';
+import { FileText, Download, TrendingUp, Award } from 'lucide-react';
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts';
 
-export default function ReportsModule() {
+export default function AnalyticsModule() {
   const { t, language } = useTranslation();
-  const { teams, players, matches, addNotification } = useClubStore();
+  const { teams, players, addNotification } = useClubStore();
 
   // 1. Calculate Team Attendance Rate averages
   const barChartData = teams.map(team => {

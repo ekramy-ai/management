@@ -4,7 +4,7 @@ import React, { useState } from 'react';
 import { useTranslation } from '../../locales/useTranslation';
 import { useClubStore } from '../../store/clubStore';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Users, Plus, Trash2, Edit2, ShieldAlert, GraduationCap, X } from 'lucide-react';
+import { Users, Plus, Trash2, Edit2, GraduationCap, X } from 'lucide-react';
 import { Team } from '../../types';
 
 export default function TeamsModule() {

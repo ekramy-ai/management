@@ -2,7 +2,7 @@ export type Role = 'Admin' | 'Head Coach' | 'Assistant Coach' | 'Physiotherapist
 export type PlayerPosition = 'Setter' | 'Outside Hitter' | 'Opposite Hitter' | 'Middle Blocker' | 'Libero' | 'Defensive Specialist';
 export type PlayerStatus = 'Active' | 'Injured' | 'Inactive' | 'On Leave';
 export type MatchStatus = 'Scheduled' | 'Live' | 'Completed' | 'Cancelled';
-export type AttendanceStatus = 'Present' | 'Excused' | 'Absent';
+export type AttendanceStatus = 'Present' | 'Late' | 'Absent' | 'Excused' | 'Injured';
 
 export interface User {
   id: string;
@@ -85,6 +85,8 @@ export interface Match {
   notesAr?: string;
 }
 
+export type TrainingType = 'Technical' | 'Tactical' | 'Physical' | 'Recovery' | 'Match Preparation';
+
 export interface TrainingSession {
   id: string;
   teamId: string; // Links to Team
@@ -97,15 +99,17 @@ export interface TrainingSession {
   locationAr: string;
   focusAreaEn: string;
   focusAreaAr: string; // e.g. Reception, Blocking, Rotation
+  type: TrainingType;
   descriptionEn?: string;
   descriptionAr?: string;
 }
 
 export interface AttendanceRecord {
-  id: string; // sessionType-sessionId-playerId
+  id: string; // sessionType-sessionId-personId
   sessionId: string; // Links to TrainingSession or Match
   sessionType: 'Training' | 'Match';
-  playerId: string; // Links to Player
+  playerId?: string; // Links to Player (if player)
+  staffId?: string; // Links to Staff (if staff)
   status: AttendanceStatus;
   checkInTime?: string;
   noteEn?: string;

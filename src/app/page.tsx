@@ -10,16 +10,16 @@ import Navbar from '../components/layout/Navbar';
 import NotificationDrawer from '../components/layout/NotificationDrawer';
 
 // Module Components
-import DashboardModule from '../components/modules/DashboardModule';
-import TeamsModule from '../components/modules/TeamsModule';
-import PlayersModule from '../components/modules/PlayersModule';
-import StaffModule from '../components/modules/StaffModule';
-import AttendanceModule from '../components/modules/AttendanceModule';
-import TrainingModule from '../components/modules/TrainingModule';
-import MatchesModule from '../components/modules/MatchesModule';
-import ReportsModule from '../components/modules/ReportsModule';
-import NotificationsModule from '../components/modules/NotificationsModule';
-import SettingsModule from '../components/modules/SettingsModule';
+import DashboardModule from '../components/dashboard/DashboardModule';
+import TeamsModule from '../components/teams/TeamsModule';
+import PlayersModule from '../components/players/PlayersModule';
+import StaffModule from '../components/staff/StaffModule';
+import AttendanceModule from '../components/attendance/AttendanceModule';
+import TrainingModule from '../components/trainings/TrainingModule';
+import MatchesModule from '../components/matches/MatchesModule';
+import AnalyticsModule from '../components/analytics/AnalyticsModule';
+import NotificationsModule from '../components/notifications/NotificationsModule';
+import SettingsModule from '../components/settings/SettingsModule';
 
 export default function Home() {
   const { activeTab, initializeUI } = useUIStore();
@@ -46,7 +46,7 @@ export default function Home() {
       case 'matches':
         return <MatchesModule />;
       case 'reports':
-        return <ReportsModule />;
+        return <AnalyticsModule />;
       case 'notifications':
         return <NotificationsModule />;
       case 'settings':

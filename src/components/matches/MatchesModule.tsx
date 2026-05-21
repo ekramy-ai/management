@@ -161,7 +161,7 @@ export default function MatchesModule() {
         </div>
         <button
           onClick={openAddModal}
-          className="h-10 px-4 bg-brand-500 hover:bg-brand-600 text-white rounded-lg text-xs font-bold transition-all flex items-center gap-1.5 shadow-md shadow-brand-500/20 cursor-pointer"
+          className="h-10 px-4 bg-brand-500 hover:bg-brand-600 text-white rounded-lg text-xs font-bold transition-all flex items-center gap-1.5 shadow-md shadow-brand-500/20 cursor-pointer animate-fade-in"
         >
           <Plus className="w-4 h-4" />
           <span>{t('add')}</span>
@@ -178,12 +178,12 @@ export default function MatchesModule() {
               <span className="font-bold text-xs text-foreground uppercase tracking-wider">{t('matches')}</span>
             </div>
             
-            <div className="divide-y divide-border/60 max-h-[500px] overflow-y-auto">
+            <div className="divide-y divide-border/60 max-h-[550px] overflow-y-auto">
               {matches.map((match) => (
                 <div
                   key={match.id}
                   onClick={() => setSelectedMatchId(match.id)}
-                  className={`p-4 hover:bg-muted/30 transition-colors duration-150 cursor-pointer flex justify-between items-center text-xs ${
+                  className={`p-4 hover:bg-muted/30 transition-colors duration-150 cursor-pointer flex justify-between items-center text-xs group ${
                     selectedMatchId === match.id ? 'bg-brand-500/5' : ''
                   }`}
                 >
@@ -210,7 +210,7 @@ export default function MatchesModule() {
                       </span>
                     )}
 
-                    <div className="flex gap-1.5 opacity-0 group-hover:opacity-100 xl:opacity-100">
+                    <div className="flex gap-1.5 opacity-0 group-hover:opacity-100 transition-opacity">
                       <button
                         onClick={(e) => { e.stopPropagation(); openEditModal(match); }}
                         className="p-1 hover:bg-muted rounded text-muted-foreground hover:text-foreground cursor-pointer"

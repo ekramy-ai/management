@@ -4,8 +4,8 @@ import React, { useState } from 'react';
 import { useTranslation } from '../../locales/useTranslation';
 import { useClubStore } from '../../store/clubStore';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Calendar, Plus, Trash2, Edit2, ShieldAlert, X, Clock, MapPin, Target } from 'lucide-react';
-import { TrainingSession } from '../../types';
+import { Calendar, Plus, Trash2, Edit2, X, Clock, MapPin, Target } from 'lucide-react';
+import { TrainingSession, TrainingType } from '../../types';
 
 export default function TrainingModule() {
   const { t, language } = useTranslation();
@@ -25,6 +25,7 @@ export default function TrainingModule() {
   const [locationAr, setLocationAr] = useState('');
   const [focusAreaEn, setFocusAreaEn] = useState('Defense & Digging');
   const [focusAreaAr, setFocusAreaAr] = useState('الدفاع والاستقبال');
+  const [type, setType] = useState<TrainingType>('Technical');
   const [descriptionEn, setDescriptionEn] = useState('');
   const [descriptionAr, setDescriptionAr] = useState('');
 
@@ -40,6 +41,7 @@ export default function TrainingModule() {
     setLocationAr('ملعب الصالة الرئيسية');
     setFocusAreaEn('Defense & Digging');
     setFocusAreaAr('الدفاع والاستقبال');
+    setType('Technical');
     setDescriptionEn('');
     setDescriptionAr('');
     setIsModalOpen(true);
@@ -57,6 +59,7 @@ export default function TrainingModule() {
     setLocationAr(session.locationAr);
     setFocusAreaEn(session.focusAreaEn);
     setFocusAreaAr(session.focusAreaAr);
+    setType(session.type);
     setDescriptionEn(session.descriptionEn || '');
     setDescriptionAr(session.descriptionAr || '');
     setIsModalOpen(true);
@@ -77,6 +80,7 @@ export default function TrainingModule() {
       locationAr,
       focusAreaEn,
       focusAreaAr,
+      type,
       descriptionEn,
       descriptionAr
     };
@@ -106,7 +110,7 @@ export default function TrainingModule() {
         </div>
         <button
           onClick={openAddModal}
-          className="h-10 px-4 bg-brand-500 hover:bg-brand-600 text-white rounded-lg text-xs font-bold transition-all flex items-center gap-1.5 shadow-md shadow-brand-500/20 cursor-pointer"
+          className="h-10 px-4 bg-brand-500 hover:bg-brand-600 text-white rounded-lg text-xs font-bold transition-all flex items-center gap-1.5 shadow-md shadow-brand-500/20 cursor-pointer animate-fade-in"
         >
           <Plus className="w-4 h-4" />
           <span>{t('add')}</span>
@@ -214,19 +218,36 @@ export default function TrainingModule() {
               </div>
 
               <form onSubmit={handleSubmit} className="space-y-4 pt-4 text-xs">
-                <div className="space-y-1">
-                  <label className="font-bold text-muted-foreground">{t('teams')}</label>
-                  <select
-                    value={teamId}
-                    onChange={(e) => setTeamId(e.target.value)}
-                    required
-                    className="w-full h-10 px-3 bg-muted/40 rounded-lg border border-border focus:outline-none focus:border-brand-500 text-foreground"
-                  >
-                    <option value="">{t('none')}</option>
-                    {teams.map(t => (
-                      <option key={t.id} value={t.id}>{language === 'ar' ? t.nameAr : t.nameEn}</option>
-                    ))}
-                  </select>
+                <div className="grid grid-cols-2 gap-4">
+                  <div className="space-y-1">
+                    <label className="font-bold text-muted-foreground">{t('teams')}</label>
+                    <select
+                      value={teamId}
+                      onChange={(e) => setTeamId(e.target.value)}
+                      required
+                      className="w-full h-10 px-3 bg-muted/40 rounded-lg border border-border focus:outline-none focus:border-brand-500 text-foreground"
+                    >
+                      <option value="">{t('none')}</option>
+                      {teams.map(t => (
+                        <option key={t.id} value={t.id}>{language === 'ar' ? t.nameAr : t.nameEn}</option>
+                      ))}
+                    </select>
+                  </div>
+                  <div className="space-y-1">
+                    <label className="font-bold text-muted-foreground">{t('trainingType')}</label>
+                    <select
+                      value={type}
+                      onChange={(e) => setType(e.target.value as TrainingType)}
+                      required
+                      className="w-full h-10 px-3 bg-muted/40 rounded-lg border border-border focus:outline-none focus:border-brand-500 text-foreground"
+                    >
+                      <option value="Technical">{language === 'ar' ? t('technical') : 'Technical'}</option>
+                      <option value="Tactical">{language === 'ar' ? t('tactical') : 'Tactical'}</option>
+                      <option value="Physical">{language === 'ar' ? t('physical') : 'Physical'}</option>
+                      <option value="Recovery">{language === 'ar' ? t('recovery') : 'Recovery'}</option>
+                      <option value="Match Preparation">{language === 'ar' ? t('matchPreparation') : 'Match Preparation'}</option>
+                    </select>
+                  </div>
                 </div>
 
                 <div className="grid grid-cols-2 gap-4">

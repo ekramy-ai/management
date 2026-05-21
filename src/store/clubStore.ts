@@ -40,7 +40,8 @@ interface ClubState {
   deleteTrainingSession: (id: string) => void;
 
   // Attendance Actions
-  setPlayerAttendance: (sessionId: string, sessionType: 'Training' | 'Match', playerId: string, status: AttendanceStatus) => void;
+  setPlayerAttendance: (sessionId: string, sessionType: 'Training' | 'Match', playerId: string, status: AttendanceStatus, noteEn?: string, noteAr?: string) => void;
+  setStaffAttendance: (sessionId: string, sessionType: 'Training' | 'Match', staffId: string, status: AttendanceStatus, noteEn?: string, noteAr?: string) => void;
   bulkSetAttendance: (records: Omit<AttendanceRecord, 'id'>[]) => void;
 
   // Notification Actions
@@ -405,6 +406,7 @@ const initialTrainingSessions: TrainingSession[] = [
     locationAr: 'الملعب الرئيسي - صالة النادي',
     focusAreaEn: 'Defense & Digging',
     focusAreaAr: 'الدفاع والاستقبال',
+    type: 'Tactical',
     descriptionEn: 'Drills on covering lines and setting up pipe attacks.',
     descriptionAr: 'تدريبات تغطية الخطوط والتجهيز للهجوم السريع البايب.',
   },
@@ -420,6 +422,7 @@ const initialTrainingSessions: TrainingSession[] = [
     locationAr: 'ملعب ب - صالة التدريب',
     focusAreaEn: 'Serving & Passing',
     focusAreaAr: 'الإرسال والتمرير',
+    type: 'Technical',
     descriptionEn: 'Target areas practice for servers, block configuration for passes.',
     descriptionAr: 'التدريب على استهداف نقاط معينة وتشكيل حائط الصد للتمرير.',
   },
@@ -435,6 +438,7 @@ const initialTrainingSessions: TrainingSession[] = [
     locationAr: 'الملعب الرئيسي - صالة النادي',
     focusAreaEn: 'Blocking',
     focusAreaAr: 'حائط الصد',
+    type: 'Physical',
     descriptionEn: 'Quick shifting exercises for middle blockers.',
     descriptionAr: 'تمارين الانتقال السريع للاعب الوسط الصاد.',
   }
@@ -442,20 +446,26 @@ const initialTrainingSessions: TrainingSession[] = [
 
 const initialAttendance: AttendanceRecord[] = [
   // Session 1: tr-1 (Training on May 19)
-  { id: 'tr-1-p-1', sessionId: 'tr-1', sessionType: 'Training', playerId: 'p-1', status: 'Present' },
-  { id: 'tr-1-p-2', sessionId: 'tr-1', sessionType: 'Training', playerId: 'p-2', status: 'Present' },
-  { id: 'tr-1-p-3', sessionId: 'tr-1', sessionType: 'Training', playerId: 'p-3', status: 'Present' },
-  { id: 'tr-1-p-4', sessionId: 'tr-1', sessionType: 'Training', playerId: 'p-4', status: 'Present' },
-  { id: 'tr-1-p-5', sessionId: 'tr-1', sessionType: 'Training', playerId: 'p-5', status: 'Present' },
-  { id: 'tr-1-p-6', sessionId: 'tr-1', sessionType: 'Training', playerId: 'p-6', status: 'Excused', noteEn: 'Injury recovery', noteAr: 'الاستشفاء من الإصابة' },
+  { id: 'training-tr-1-p-1', sessionId: 'tr-1', sessionType: 'Training', playerId: 'p-1', status: 'Present' },
+  { id: 'training-tr-1-p-2', sessionId: 'tr-1', sessionType: 'Training', playerId: 'p-2', status: 'Late', noteEn: 'Late by 5 mins', noteAr: 'متأخر ٥ دقائق' },
+  { id: 'training-tr-1-p-3', sessionId: 'tr-1', sessionType: 'Training', playerId: 'p-3', status: 'Present' },
+  { id: 'training-tr-1-p-4', sessionId: 'tr-1', sessionType: 'Training', playerId: 'p-4', status: 'Present' },
+  { id: 'training-tr-1-p-5', sessionId: 'tr-1', sessionType: 'Training', playerId: 'p-5', status: 'Present' },
+  { id: 'training-tr-1-p-6', sessionId: 'tr-1', sessionType: 'Training', playerId: 'p-6', status: 'Injured', noteEn: 'Ankle rehabilitation', noteAr: 'تأهيل الكاحل' },
+  { id: 'training-tr-1-s-1', sessionId: 'tr-1', sessionType: 'Training', staffId: 's-1', status: 'Present' },
+  { id: 'training-tr-1-s-2', sessionId: 'tr-1', sessionType: 'Training', staffId: 's-2', status: 'Present' },
+  { id: 'training-tr-1-s-4', sessionId: 'tr-1', sessionType: 'Training', staffId: 's-4', status: 'Present' },
   
   // Session 2: tr-2 (Training on May 21)
-  { id: 'tr-2-p-1', sessionId: 'tr-2', sessionType: 'Training', playerId: 'p-1', status: 'Present' },
-  { id: 'tr-2-p-2', sessionId: 'tr-2', sessionType: 'Training', playerId: 'p-2', status: 'Present' },
-  { id: 'tr-2-p-3', sessionId: 'tr-2', sessionType: 'Training', playerId: 'p-3', status: 'Present' },
-  { id: 'tr-2-p-4', sessionId: 'tr-2', sessionType: 'Training', playerId: 'p-4', status: 'Present' },
-  { id: 'tr-2-p-5', sessionId: 'tr-2', sessionType: 'Training', playerId: 'p-5', status: 'Absent', noteEn: 'Overslept', noteAr: 'تأخر في النوم' },
-  { id: 'tr-2-p-6', sessionId: 'tr-2', sessionType: 'Training', playerId: 'p-6', status: 'Excused' }
+  { id: 'training-tr-2-p-1', sessionId: 'tr-2', sessionType: 'Training', playerId: 'p-1', status: 'Present' },
+  { id: 'training-tr-2-p-2', sessionId: 'tr-2', sessionType: 'Training', playerId: 'p-2', status: 'Present' },
+  { id: 'training-tr-2-p-3', sessionId: 'tr-2', sessionType: 'Training', playerId: 'p-3', status: 'Present' },
+  { id: 'training-tr-2-p-4', sessionId: 'tr-2', sessionType: 'Training', playerId: 'p-4', status: 'Present' },
+  { id: 'training-tr-2-p-5', sessionId: 'tr-2', sessionType: 'Training', playerId: 'p-5', status: 'Absent', noteEn: 'Overslept', noteAr: 'تأخر في النوم' },
+  { id: 'training-tr-2-p-6', sessionId: 'tr-2', sessionType: 'Training', playerId: 'p-6', status: 'Injured' },
+  { id: 'training-tr-2-s-1', sessionId: 'tr-2', sessionType: 'Training', staffId: 's-1', status: 'Present' },
+  { id: 'training-tr-2-s-2', sessionId: 'tr-2', sessionType: 'Training', staffId: 's-2', status: 'Late', noteEn: 'Stuck in traffic', noteAr: 'عالق في حركة المرور' },
+  { id: 'training-tr-2-s-4', sessionId: 'tr-2', sessionType: 'Training', staffId: 's-4', status: 'Present' }
 ];
 
 const initialNotifications: SystemNotification[] = [
@@ -592,14 +602,14 @@ export const useClubStore = create<ClubState>((set) => ({
   })),
 
   // Attendance
-  setPlayerAttendance: (sessionId, sessionType, playerId, status) => set((state) => {
+  setPlayerAttendance: (sessionId, sessionType, playerId, status, noteEn, noteAr) => set((state) => {
     const attendanceId = `${sessionType.toLowerCase()}-${sessionId}-${playerId}`;
     const exists = state.attendance.some((a) => a.id === attendanceId);
     let nextAttendance;
 
     if (exists) {
       nextAttendance = state.attendance.map((a) => 
-        a.id === attendanceId ? { ...a, status } : a
+        a.id === attendanceId ? { ...a, status, noteEn, noteAr } : a
       );
     } else {
       const record: AttendanceRecord = {
@@ -608,6 +618,33 @@ export const useClubStore = create<ClubState>((set) => ({
         sessionType,
         playerId,
         status,
+        noteEn,
+        noteAr,
+        checkInTime: new Date().toISOString()
+      };
+      nextAttendance = [...state.attendance, record];
+    }
+    return { attendance: nextAttendance };
+  }),
+
+  setStaffAttendance: (sessionId, sessionType, staffId, status, noteEn, noteAr) => set((state) => {
+    const attendanceId = `${sessionType.toLowerCase()}-${sessionId}-${staffId}`;
+    const exists = state.attendance.some((a) => a.id === attendanceId);
+    let nextAttendance;
+
+    if (exists) {
+      nextAttendance = state.attendance.map((a) => 
+        a.id === attendanceId ? { ...a, status, noteEn, noteAr } : a
+      );
+    } else {
+      const record: AttendanceRecord = {
+        id: attendanceId,
+        sessionId,
+        sessionType,
+        staffId,
+        status,
+        noteEn,
+        noteAr,
         checkInTime: new Date().toISOString()
       };
       nextAttendance = [...state.attendance, record];
@@ -618,7 +655,7 @@ export const useClubStore = create<ClubState>((set) => ({
   bulkSetAttendance: (records) => set((state) => {
     const newRecords = records.map((r) => ({
       ...r,
-      id: `${r.sessionType.toLowerCase()}-${r.sessionId}-${r.playerId}`
+      id: `${r.sessionType.toLowerCase()}-${r.sessionId}-${r.playerId || r.staffId}`
     }));
     
     // Merge new records with old, overriding matching IDs

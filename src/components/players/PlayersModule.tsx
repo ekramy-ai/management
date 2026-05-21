@@ -5,8 +5,8 @@ import { useTranslation } from '../../locales/useTranslation';
 import { useClubStore } from '../../store/clubStore';
 import { motion, AnimatePresence } from 'framer-motion';
 import { 
-  Users, Plus, Trash2, Edit2, ShieldAlert, X, Search, Activity, 
-  ChevronRight, ArrowUpDown, Shield, Info, BarChart2
+  Users, Plus, Trash2, Edit2, X, Search, Activity, 
+  Info, BarChart2
 } from 'lucide-react';
 import { Player, PlayerPosition, PlayerStatus } from '../../types';
 import { Radar, RadarChart, PolarGrid, PolarAngleAxis, PolarRadiusAxis, ResponsiveContainer } from 'recharts';
@@ -178,7 +178,7 @@ export default function PlayersModule() {
         <div className="xl:col-span-3 space-y-4">
           
           {/* Controls Bar */}
-          <div className="p-4 rounded-xl glass-card flex flex-col md:flex-row gap-3">
+          <div className="p-4 rounded-xl glass-card flex flex-col md:flex-row gap-3 text-start">
             <div className="relative flex-1 flex items-center">
               <Search className="absolute start-3 w-4 h-4 text-muted-foreground" />
               <input
