@@ -1,0 +1,157 @@
+@import url('https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;500;600;700;800&family=Outfit:wght@300;400;500;600;700;800&display=swap');
+
+@import "tailwindcss";
+
+
+@theme {
+  --font-sans: 'Outfit', 'Cairo', system-ui, -apple-system, sans-serif;
+  --font-mono: 'Geist Mono', monospace;
+
+  /* Custom Color Tokens */
+  --color-brand-50: var(--brand-50);
+  --color-brand-100: var(--brand-100);
+  --color-brand-200: var(--brand-200);
+  --color-brand-300: var(--brand-300);
+  --color-brand-400: var(--brand-400);
+  --color-brand-500: var(--brand-500);
+  --color-brand-600: var(--brand-600);
+  --color-brand-700: var(--brand-700);
+  --color-brand-800: var(--brand-800);
+  --color-brand-900: var(--brand-900);
+  --color-brand-950: var(--brand-950);
+
+  --color-court-green: #10b981;
+  --color-court-orange: #f59e0b;
+}
+
+:root {
+  /* Default Light Mode Colors */
+  --brand-50: #f5f3ff;
+  --brand-100: #ede9fe;
+  --brand-200: #ddd6fe;
+  --brand-300: #c4b5fd;
+  --brand-400: #a78bfa;
+  --brand-500: #8b5cf6;
+  --brand-600: #7c3aed;
+  --brand-700: #6d28d9;
+  --brand-800: #5b21b6;
+  --brand-900: #4c1d95;
+  --brand-950: #2e1065;
+
+  --background: #f8fafc;
+  --foreground: #0f172a;
+  
+  --card-bg: rgba(255, 255, 255, 0.8);
+  --card-border: rgba(241, 245, 249, 0.8);
+  --sidebar-bg: #ffffff;
+  --sidebar-border: #e2e8f0;
+}
+
+:root.dark {
+  /* Dark Mode Overrides */
+  --background: #09090b;
+  --foreground: #fafafa;
+
+  --card-bg: rgba(20, 20, 23, 0.6);
+  --card-border: rgba(39, 39, 42, 0.4);
+  --sidebar-bg: #0c0c0e;
+  --sidebar-border: rgba(39, 39, 42, 0.6);
+  
+  --brand-50: #2e1065;
+  --brand-100: #4c1d95;
+  --brand-200: #5b21b6;
+  --brand-300: #6d28d9;
+  --brand-400: #7c3aed;
+  --brand-500: #8b5cf6;
+  --brand-600: #a78bfa;
+  --brand-700: #c4b5fd;
+  --brand-800: #ddd6fe;
+  --brand-900: #ede9fe;
+  --brand-950: #f5f3ff;
+}
+
+body {
+  background-color: var(--background);
+  color: var(--foreground);
+  font-family: var(--font-sans);
+  transition: background-color 0.3s ease, color 0.3s ease;
+  overflow-x: hidden;
+}
+
+/* Premium Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(139, 92, 246, 0.2);
+  border-radius: 9999px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(139, 92, 246, 0.4);
+}
+
+/* Custom UI Effects */
+.glass-card {
+  background: var(--card-bg);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid var(--card-border);
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.03);
+}
+
+.dark .glass-card {
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.2);
+}
+
+.glow-border {
+  position: relative;
+}
+
+.glow-border::after {
+  content: '';
+  position: absolute;
+  inset: -1px;
+  background: linear-gradient(90deg, #8b5cf6, #10b981);
+  border-radius: inherit;
+  z-index: -1;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.glow-border:hover::after {
+  opacity: 1;
+}
+
+/* Volleyball Court Styling */
+.court-surface {
+  background-color: #f97316; /* Warm volleyball indoor court wood/orange */
+  background-image: radial-gradient(circle, rgba(251, 146, 60, 0.3) 0%, rgba(234, 88, 12, 0.4) 100%);
+  border: 4px solid #ffffff;
+  position: relative;
+}
+
+.court-surface-outer {
+  background-color: #1d4ed8; /* Blue outer court boundary */
+  border: 2px solid #ffffff;
+}
+
+.court-line-net {
+  background-color: rgba(255, 255, 255, 0.9);
+  box-shadow: 0 0 8px rgba(255, 255, 255, 0.5);
+}
+
+.court-net-mesh {
+  background-image: linear-gradient(45deg, #ccc 25%, transparent 25%), 
+                    linear-gradient(-45deg, #ccc 25%, transparent 25%), 
+                    linear-gradient(45deg, transparent 75%, #ccc 75%), 
+                    linear-gradient(-45deg, transparent 75%, #ccc 75%);
+  background-size: 8px 8px;
+  background-position: 0 0, 0 4px, 4px -4px, -4px 0px;
+}
